@@ -30,7 +30,6 @@ pub fn part_two(input: &str) -> Option<u32> {
     for line in input.lines() {
         // first convert to digits
         let mut line: String = line.to_string();
-        // let mut line_with_digits: String = line.clone();
         for (i, v) in digits.iter().enumerate() {
             let digit: u32 = (i + 1).try_into().unwrap();
             // Insert the digit in the middle of the number string to account for situations where words meld together
@@ -41,7 +40,6 @@ pub fn part_two(input: &str) -> Option<u32> {
             if let Some(idx) = line.rfind(v) {
                 line.insert(idx + 1, char::from_digit(digit, 10).unwrap());
             }
-            // line = line.replace(v, &char::from_digit(digit, 10).unwrap().to_string());
         }
 
         const NOT_FOUND: u32 = 11;
