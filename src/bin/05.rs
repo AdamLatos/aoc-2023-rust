@@ -131,7 +131,7 @@ pub fn transform_ranges(input_range: (u64, u64), ranges: &Vec<Vec<(u64, u64, u64
         outputs.clear();
     }
 
-    return inputs.iter().map(|(start, len)| *start).collect();
+    return inputs.iter().map(|(start, _)| *start).collect();
 }
 
 pub fn part_two(input: &str) -> Option<u64> {
