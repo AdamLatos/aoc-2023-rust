@@ -94,22 +94,14 @@ pub fn transform_ranges(input_range: (u64, u64), ranges: &Vec<Vec<(u64, u64, u64
     let mut outputs: Vec<(u64, u64)> = Vec::new();
     inputs.push(input_range);
     for map in ranges {
-        print!("NEXT STEP");
-        for (input_start, input_len) in &inputs {
-            println!("Input ({input_start}, {input_len})");
-        }
         for (input_start, input_len) in inputs {
             if input_len == 0 {
                 continue
             }
-            println!("({}, {}) --v", input_start, input_len);
+            // println!("({}, {}) --v", input_start, input_len);
             let mut preserved_input: Vec<(u64, u64)> = Vec::new();
             preserved_input.push((input_start, input_len));
             for &(dst_start, src_start, range_len) in map {
-                println!(
-                    "IN RANGE ({}, {}) to dst {}",
-                    src_start, range_len, dst_start
-                );
                 // We only need to change the input covered by range.
                 let trans_start = src_start.max(input_start);
                 let trans_end = (src_start + range_len).min(input_start + input_len);
@@ -117,15 +109,12 @@ pub fn transform_ranges(input_range: (u64, u64), ranges: &Vec<Vec<(u64, u64, u64
                     let post_trans_start = dst_start + trans_start - src_start;
                     let post_trans_len = trans_end - trans_start;
                     outputs.push((post_trans_start, post_trans_len));
-                    println!("   ({}, {}) (inrange)", post_trans_start, post_trans_len);
+                    // println!("   ({}, {}) (inrange)", post_trans_start, post_trans_len);
                     // Save what part of input was transformed
                     preserved_input = cut_range(preserved_input, (trans_start, trans_end));
                 }
             }
             outputs.append(&mut preserved_input);
-        }
-        for (input_start, input_len) in &outputs {
-            println!("Output ({input_start}, {input_len})");
         }
         inputs = outputs.clone();
         outputs.clear();
@@ -167,7 +156,7 @@ pub fn part_two(input: &str) -> Option<u64> {
         for loc in location_ranges {
             lowest_location = lowest_location.min(loc);
         }
-        println!("Lowest location: {}", lowest_location);
+        // println!("Lowest location: {}", lowest_location);
     }
 
     Some(lowest_location)
